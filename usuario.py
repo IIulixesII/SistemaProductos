@@ -5,4 +5,3 @@ class Usuario:
         self.contrasena = contrasena
         self.imagen = imagen
         self.fecha_nacimiento=fecha_nacimiento
-#metodo que devuelve el item de

@@ -4,4 +4,3 @@ class Admin:
         self.gmail = gmail
         self.contrasena = contrasena
         self.imagen = imagen
-#metodo que devuelve el item de

@@ -1,33 +1,22 @@
-"""
-Clase Prodcuto
-"""
+from producto import agregar_producto, mostrar_productos  # Importar las funciones
 
-class Producto:
-    def __init__(self, nombre, descripcion, precio, imagen):
-        self.nombre = nombre
-        self.descripcion = descripcion
-        self.precio = precio
-        self.imagen = imagen
 
-    def mostrar_info(self):
-        return f"Producto: {self.nombre}\nDescripción: {self.descripcion}\nPrecio: ${self.precio}\nImagen: {self.imagen}"
+def menu():
+    while True:
+        print("\n--- Sistema de Subida de Productos ---")
+        print("1. Agregar producto")
+        print("2. Mostrar productos")
+        print("3. Salir")
+        opcion = input("Seleccione una opción: ")
 
-productos = []
+        if opcion == '1':
+            agregar_producto()  # Pasar la lista de productos a la función
+        elif opcion == '2':
+            mostrar_productos()  # Pasar la lista de productos a la función
+        elif opcion == '3':
+            print("Saliendo del sistema...")
+            break  # Termina el bucle y cierra el programa
+        else:
+            print("Opción no válida. Intente de nuevo.")
 
-def agregar_producto():
-    nombre = input("Ingrese el nombre del producto: ")
-    descripcion = input("Ingrese la descripción del producto: ")
-    precio = float(input("Ingrese el precio del producto: "))
-    imagen = input("Ingrese el nombre o ruta de la imagen del producto: ")
-
-    producto = Producto(nombre, descripcion, precio, imagen)
-    productos.append(producto)
-    print("\nProducto agregado exitosamente!")
-
-def mostrar_productos():
-    if not productos:
-        print("\nNo hay productos disponibles.")
-    else:
-        for i in range(len(productos)):
-            print(f"\nProducto #{i + 1}:")
-            print(productos[i].mostrar_info())
+    menu()
