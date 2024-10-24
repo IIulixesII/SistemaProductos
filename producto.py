@@ -1,3 +1,4 @@
+
 class Producto:
     def __init__(self, nombre, descripcion, precio, imagen):
         # Inicializa los atributos del producto
@@ -26,7 +27,7 @@ def agregar_producto():
     print("\nProducto agregado exitosamente!")  
 
 def mostrar_productos():
-    if not productos:
+    if not productos: #not  hace que si es none productos es verdadero
         print("\nNo hay productos disponibles.") 
     else:
         # Recorre la lista de productos utilizando un bucle
