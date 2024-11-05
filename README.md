@@ -19,3 +19,7 @@ El cliente tendra la capacidad de comprar y comentar de forma practica.
 
    ```bash
    git clone https://github.com/IIulixesII/SistemaProductos
+
+
+   
+![Diagramaentidad-relación drawio](https://github.com/user-attachments/assets/0699128f-0190-45cc-b8aa-f92f5ae6eb66)
