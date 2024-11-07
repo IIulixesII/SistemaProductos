@@ -1,66 +1,64 @@
 import sqlite3 as sql
+import os
 
-def createDB():
+def create_db():
+    # Elimina la base de datos si existe
+    if os.path.exists("productos.db"):
+        os.remove("productos.db")
+
+    # Crea una conexión para la nueva base de datos
     conn = sql.connect("productos.db")
     conn.commit()
     conn.close()
 
-def createTable():
+def create_table():
+    # Crea la tabla productos con un campo autoincrementable 'id'
     conn = sql.connect("productos.db")
     cursor = conn.cursor()
     cursor.execute(
         """CREATE TABLE IF NOT EXISTS productos(
-        nombre text,
-        precio integer,
-        categoria text,
-        img text
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            nombre TEXT,
+            precio INTEGER,
+            categoria TEXT,
+            img TEXT
         )"""
     )
     conn.commit()
     conn.close()
 
-def insertrow(nombre, precio, categoria, img):
+def insert_row(nombre, precio, categoria, img):
     conn = sql.connect("productos.db")
     cursor = conn.cursor()
-    instruccion = f"INSERT INTO productos (nombre, precio, categoria, img) VALUES ('{nombre}', {precio}, '{categoria}', '{img}')"
-    cursor.execute(instruccion)
+    cursor.execute(
+        "INSERT INTO productos (nombre, precio, categoria, img) VALUES (?, ?, ?, ?)",
+        (nombre, precio, categoria, img)
+    )
     conn.commit()
     conn.close()
 
-def insertrows(ProductosList):
+def read_rows():
     conn = sql.connect("productos.db")
     cursor = conn.cursor()
-    instruccion = "INSERT INTO productos (nombre, precio, categoria, img) VALUES (?, ?, ?, ?)"
-    cursor.executemany(instruccion, ProductosList)  # Ejecutar para múltiples filas
-    conn.commit()
-    conn.close()
-
-def readRows():
-    conn = sql.connect("productos.db")
-    cursor = conn.cursor()
-    instruccion = "SELECT * FROM productos"
-    cursor.execute(instruccion)
+    cursor.execute("SELECT * FROM productos")
     datos = cursor.fetchall()
     conn.close()
-    print(datos)
+    return datos
 
-
-def deleteRow(nombre):
+def delete_row(nombre):
     conn = sql.connect("productos.db")
     cursor = conn.cursor()
-    instruccion = "DELETE FROM productos WHERE nombre = ?"
-    cursor.execute(instruccion, (nombre,))  # Pasar el nombre como parámetro
-    conn.commit()  # Guardar los cambios
+    cursor.execute("DELETE FROM productos WHERE nombre = ?", (nombre,))
+    conn.commit()
     conn.close()
-    print(f"Producto '{nombre}' eliminado.")
-
-if __name__ == "__main__":
-    createTable()  # Crear la tabla si no existe
-    ProductosList = [
-        ("Telefono", 500000, "Electronico", "img/saff/aff"),
-        ("Auriculares", 30000, "Electronico", "img/afaf/awds"),
-        ("Play5", 1000000, "Electronico", "img/afdad/sad")
-    ]
     
-deleteRow("Computadora")      
-readRows()  # Leer y mostrar las filas
+def read_product_by_id(producto_id):
+    conn = sql.connect("productos.db")
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM productos WHERE id = ?", (producto_id,))
+    return cursor.fetchone()  # Retorna una tupla con los datos del producto
+
+# Ejecuta estas funciones para configurar la base de datos al inicio
+if __name__ == "__main__":
+    create_db()
+    create_table()
