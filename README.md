@@ -12,6 +12,11 @@ El cliente tendra la capacidad de comprar y comentar de forma practica.
 - Gestión de productos (visualización, edición y eliminación).
 - Almacenamiento seguro de imágenes de los productos.
 - Compra de productos y comentarios sobre estos.
+- 
+## Diagramas
+![DFD drawio](https://github.com/user-attachments/assets/2c96f17e-8b1a-41c9-a7cd-fa2ac830248e)
+![image](https://github.com/user-attachments/assets/5ff19482-dc8d-4c03-8906-0c548e653f57)
+
 
 ## Instalación
 
