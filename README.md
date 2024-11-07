@@ -13,6 +13,12 @@ El cliente tendra la capacidad de comprar y comentar de forma practica.
 - Almacenamiento seguro de imágenes de los productos.
 - Compra de productos y comentarios sobre estos.
 
+## Diagramas
+
+![image](https://github.com/user-attachments/assets/89eb0461-0934-4a2c-9263-5d481b32728e)
+![DFD drawio](https://github.com/user-attachments/assets/d5db06f3-a46e-4283-a5c6-8d675e42778a)
+
+
 ## Instalación
 
 1. Clona este repositorio en tu máquina local:
