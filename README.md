@@ -13,17 +13,16 @@ El cliente tendra la capacidad de comprar y comentar de forma practica.
 - Almacenamiento seguro de imágenes de los productos.
 - Compra de productos y comentarios sobre estos.
 
-## Instalación
-
-1. Clona este repositorio en tu máquina local:
-
-
 
    ## Diagramas! 
 ![Diagramaentidad-relación drawio](https://github.com/user-attachments/assets/0699128f-0190-45cc-b8aa-f92f5ae6eb66)
 ![image](https://github.com/user-attachments/assets/3090ef37-6086-45b2-b180-458d81ea209a)
 
 
+
+## Instalación
+
+1. Clona este repositorio en tu máquina local:
 
    ```bash
    git clone https://github.com/IIulixesII/SistemaProductos
