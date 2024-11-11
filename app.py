@@ -1,4 +1,4 @@
-from conexion.conexion import insert_row, read_rows, read_product_by_id
+from conexion.conexion import insert_row, read_rows, read_product_by_id, insert_usuario
 from flask import Flask, render_template, request, redirect, url_for
 import os
 from werkzeug.utils import secure_filename
@@ -30,9 +30,39 @@ def agregar_producto():
             img_path = f"{app.config['UPLOAD_FOLDER']}/{filename}"
             insert_row(nombre, precio, categoria, img_path)
         
+    
         return redirect(url_for('ver_productos'))
     
-    return render_template('crear_producto.html')
+    
+    return render_template('crear_producto.html')  # Muestra el formulario para agregar un producto
+
+@app.route('/usuario/crear', methods=['GET', 'POST'])
+def crear_usuario():
+    if request.method == 'POST':
+        # Obtener los datos del formulario
+        nombre = request.form['nombre']
+        contraseña = request.form['contraseña']
+        gmail = request.form['gmail']
+        fecha_nacimiento = request.form['fecha_nacimiento']
+        
+        # Manejo del archivo de imagen para la foto de perfil
+        foto_perfil = request.files['foto_perfil']
+        if foto_perfil:
+            # Guardar el archivo de imagen de manera segura
+            filename = secure_filename(foto_perfil.filename)
+            filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            foto_perfil.save(filepath)
+            foto_path = f"{app.config['UPLOAD_FOLDER']}/{filename}"
+        else:
+            foto_path = None
+        
+        # Insertar el nuevo usuario en la base de datos
+        insert_usuario(nombre, contraseña, gmail, fecha_nacimiento, foto_path)
+        
+        # Redirigir a la página de productos o a cualquier otra página
+        return redirect(url_for('ver_productos'))  # Puedes cambiar la redirección a donde necesites
+
+    return render_template('crear_usuario.html')
 
 @app.route('/comprar', methods=['POST'])
 def comprar_producto():

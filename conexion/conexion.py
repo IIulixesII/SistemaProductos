@@ -26,7 +26,16 @@ def create_table():
     )
     conn.commit()
     conn.close()
-
+    
+def insert_usuario(nombre, contraseña, gmail, fecha_nacimiento, foto_perfil=None):
+    conn = sql.connect("productos.db")
+    cursor = conn.cursor()
+    cursor.execute(
+        "INSERT INTO usuario (nombre, contraseña, gmail, fecha_nacimiento, foto_perfil) VALUES (?, ?, ?, ?, ?)",
+        (nombre, contraseña, gmail, fecha_nacimiento, foto_perfil)
+    )
+    conn.commit()
+    conn.close()
 def insert_row(nombre, precio, categoria, img):
     conn = sql.connect("productos.db")
     cursor = conn.cursor()
@@ -44,7 +53,45 @@ def read_rows():
     datos = cursor.fetchall()
     conn.close()
     return datos
-
+def create_table_usuarioadmin():
+    # Crea la tabla usuarioadmin con los campos 'nombre' y 'contraseña'
+    conn = sql.connect("productos.db")
+    cursor = conn.cursor()
+    cursor.execute(
+        """CREATE TABLE IF NOT EXISTS usuarioadmin(
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            nombre TEXT NOT NULL,
+            contraseña TEXT NOT NULL
+        )"""
+    )
+    conn.commit()
+    conn.close()
+def insert_admin_user():
+    # Inserta un usuario administrador con nombre 'ulises' y contraseña 'ulises12'
+    conn = sql.connect("productos.db")
+    cursor = conn.cursor()
+    cursor.execute(
+        "INSERT INTO usuarioadmin (nombre, contraseña) VALUES (?, ?)",
+        ('ulises', 'ulises12')
+    )
+    conn.commit()
+    conn.close()
+def create_table_usuario():
+    # Crea la tabla usuario con los campos 'nombre', 'contraseña', 'gmail', 'fecha_nacimiento' y 'foto_perfil'
+    conn = sql.connect("productos.db")
+    cursor = conn.cursor()
+    cursor.execute(
+        """CREATE TABLE IF NOT EXISTS usuario(
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            nombre TEXT NOT NULL,
+            contraseña TEXT NOT NULL,
+            gmail TEXT NOT NULL,
+            fecha_nacimiento TEXT NOT NULL,
+            foto_perfil TEXT
+        )"""
+    )
+    conn.commit()
+    conn.close()
 def delete_row(nombre):
     conn = sql.connect("productos.db")
     cursor = conn.cursor()
@@ -60,5 +107,5 @@ def read_product_by_id(producto_id):
 
 # Ejecuta estas funciones para configurar la base de datos al inicio
 if __name__ == "__main__":
-    create_db()
-    create_table()
+ 
+    delete_row("ProductoEliminar")
