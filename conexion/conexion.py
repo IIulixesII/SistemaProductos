@@ -1,5 +1,6 @@
 import sqlite3 as sql
 import os
+from werkzeug.security import check_password_hash  # Importa para comparar las contraseñas hash
 
 def create_db():
     # Elimina la base de datos si existe
@@ -26,8 +27,9 @@ def create_table():
     )
     conn.commit()
     conn.close()
-    
+
 def insert_usuario(nombre, contraseña, gmail, fecha_nacimiento, foto_perfil=None):
+    # Inserta un nuevo usuario en la base de datos
     conn = sql.connect("productos.db")
     cursor = conn.cursor()
     cursor.execute(
@@ -36,7 +38,9 @@ def insert_usuario(nombre, contraseña, gmail, fecha_nacimiento, foto_perfil=Non
     )
     conn.commit()
     conn.close()
+
 def insert_row(nombre, precio, categoria, img):
+    # Inserta un nuevo producto en la base de datos
     conn = sql.connect("productos.db")
     cursor = conn.cursor()
     cursor.execute(
@@ -47,12 +51,14 @@ def insert_row(nombre, precio, categoria, img):
     conn.close()
 
 def read_rows():
+    # Obtiene todos los productos de la base de datos
     conn = sql.connect("productos.db")
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM productos")
     datos = cursor.fetchall()
     conn.close()
     return datos
+
 def create_table_usuarioadmin():
     # Crea la tabla usuarioadmin con los campos 'nombre' y 'contraseña'
     conn = sql.connect("productos.db")
@@ -66,6 +72,7 @@ def create_table_usuarioadmin():
     )
     conn.commit()
     conn.close()
+
 def insert_admin_user():
     # Inserta un usuario administrador con nombre 'ulises' y contraseña 'ulises12'
     conn = sql.connect("productos.db")
@@ -76,6 +83,7 @@ def insert_admin_user():
     )
     conn.commit()
     conn.close()
+
 def create_table_usuario():
     # Crea la tabla usuario con los campos 'nombre', 'contraseña', 'gmail', 'fecha_nacimiento' y 'foto_perfil'
     conn = sql.connect("productos.db")
@@ -92,20 +100,36 @@ def create_table_usuario():
     )
     conn.commit()
     conn.close()
+
 def delete_row(nombre):
+    # Elimina un producto por su nombre
     conn = sql.connect("productos.db")
     cursor = conn.cursor()
     cursor.execute("DELETE FROM productos WHERE nombre = ?", (nombre,))
     conn.commit()
     conn.close()
-    
+
 def read_product_by_id(producto_id):
+    # Obtiene un producto por su ID
     conn = sql.connect("productos.db")
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM productos WHERE id = ?", (producto_id,))
     return cursor.fetchone()  # Retorna una tupla con los datos del producto
 
-# Ejecuta estas funciones para configurar la base de datos al inicio
-if __name__ == "__main__":
- 
-    delete_row("ProductoEliminar")
+def validar_usuario(nombre, contraseña):
+    # Conecta a la base de datos
+    conn = sql.connect("productos.db")
+    cursor = conn.cursor()
+
+    # Busca al usuario por nombre
+    cursor.execute("SELECT nombre, contraseña FROM usuario WHERE nombre = ?", (nombre,))
+    usuario = cursor.fetchone()
+
+    conn.close()  # Cierra la conexión
+
+    if usuario:
+        # Si el usuario existe, compara las contraseñas (almacenada vs proporcionada)
+        stored_password = usuario[1]  # La contraseña almacenada en la base de datos
+        if check_password_hash(stored_password, contraseña):
+            return True  # El usuario y la contraseña coinciden
+    return False  # El usuario no existe o la contraseña no coincide
