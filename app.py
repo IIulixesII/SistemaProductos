@@ -71,6 +71,12 @@ def comprar_producto():
         producto = read_product_by_id(producto_id)  # Obtener el producto por su ID
         return render_template('ver_productos.html', producto=producto)
     return redirect(url_for('ver_productos'))
+@app.route('/agregar_comentario', methods=['POST'])
+def agregar_comentario():
+    comentario = request.form['comentario']
+    # Aquí deberías agregar el comentario a la base de datos o procesarlo.
+    # Luego, puedes redirigir al usuario o renderizar una nueva página.
+    return redirect(url_for('ver_productos'))  # O cualquier página que quieras mostrar después
 
 if __name__ == '__main__':
     app.run(debug=True)

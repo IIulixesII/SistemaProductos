@@ -30,3 +30,4 @@ class TestConexion(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+#python -m unittest Pruebasunitarias/test_conexion.py
